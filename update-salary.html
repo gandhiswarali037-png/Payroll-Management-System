@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll System - Update Salary</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Payroll System</h2>
+            <ul>
+                <li><a href="admin-dashboard.html">Dashboard</a></li>
+                <li><a href="add-employee.html">Add Employee</a></li>
+                <li><a href="view-employees.html">View Employees</a></li>
+                <li><a href="salary-reports.html">Salary Reports</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Update Employee Salary</h1>
+                <div class="user-info">
+                    <span>Welcome, Admin</span>
+                </div>
+            </div>
+            
+            <div id="message" class="message"></div>
+            
+            <div class="card">
+                <form id="updateSalaryForm">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="employee_id">Employee ID</label>
+                            <input type="text" id="employee_id" readonly>
+                        </div>
+                        <div class="form-col">
+                            <label for="employee_name">Employee Name</label>
+                            <input type="text" id="employee_name" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label for="current_salary">Current Salary ($)</label>
+                            <input type="text" id="current_salary" readonly>
+                        </div>
+                        <div class="form-col">
+                            <label for="salary">New Salary ($) *</label>
+                            <input type="number" id="salary" name="salary" step="0.01" min="0" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn">Update Salary</button>
+                    <a href="view-employees.html" class="btn" style="background-color: #6c757d; text-decoration: none; display: inline-block; text-align: center; margin-top: 1rem;">Back to Employees</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+    <script>
+        // Get employee ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const employeeId = urlParams.get('id');
+        
+        // Load employee data
+        if (employeeId) {
+            fetch('php/get_employees.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const employee = data.employees.find(emp => emp.id == employeeId);
+                        if (employee) {
+                            document.getElementById('employee_id').value = employee.id;
+                            document.getElementById('employee_name').value = employee.name;
+                            document.getElementById('current_salary').value = '$' + parseFloat(employee.salary).toFixed(2);
+                            document.getElementById('salary').value = employee.salary;
+                        } else {
+                            document.getElementById('message').textContent = 'Employee not found!';
+                            document.getElementById('message').className = 'message error';
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('message').textContent = 'Error loading employee data!';
+                    document.getElementById('message').className = 'message error';
+                });
+        }
+        
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

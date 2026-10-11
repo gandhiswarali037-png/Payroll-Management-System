@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+
+<h2>Login</h2>
+
+<form id="loginForm">
+
+    <input type="email" name="email" placeholder="Enter Email" required><br><br>
+
+    <input type="password" name="password" placeholder="Enter Password" required><br><br>
+
+    <button type="submit">Login</button>
+
+</form>
+
+<p id="message"></p>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    let formData = new FormData(this);
+
+    fetch('php/login.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success){
+            window.location.href = 'admin-dashboard.php';
+        } else {
+            document.getElementById('message').innerText = data.message;
+        }
+    })
+    .catch(err => {
+        document.getElementById('message').innerText = "Server error!";
+    });
+});
+</script>
+
+</body>
+</html>

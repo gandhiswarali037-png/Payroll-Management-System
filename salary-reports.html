@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll System - Salary Reports</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Payroll System</h2>
+            <ul>
+                <li><a href="admin-dashboard.html">Dashboard</a></li>
+                <li><a href="add-employee.html">Add Employee</a></li>
+                <li><a href="view-employees.html">View Employees</a></li>
+                <li><a href="salary-reports.html" class="active">Salary Reports</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Salary Reports</h1>
+                <div class="user-info">
+                    <span>Welcome, Admin</span>
+                </div>
+            </div>
+            
+            <div id="message" class="message"></div>
+            
+            <div class="card">
+                <h2>Payroll Summary</h2>
+                <div id="reportsContainer">
+                    <!-- Reports will be loaded dynamically -->
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Export Reports</h2>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button class="btn" style="width: auto; padding: 0.75rem 1.5rem;" onclick="exportPDF()">Export as PDF</button>
+                    <button class="btn" style="width: auto; padding: 0.75rem 1.5rem; background-color: #28a745;" onclick="exportExcel()">Export as Excel</button>
+                    <button class="btn" style="width: auto; padding: 0.75rem 1.5rem; background-color: #6c757d;" onclick="printReport()">Print Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+    <script>
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'index.html';
+            }
+        }
+        
+        function exportPDF() {
+            alert('PDF export functionality would be implemented here!');
+        }
+        
+        function exportExcel() {
+            alert('Excel export functionality would be implemented here!');
+        }
+        
+        function printReport() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
